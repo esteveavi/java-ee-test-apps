@@ -106,7 +106,7 @@ public class CustomerEndpoint
 	@Consumes("multipart/form-data")
 	public Response uploadFile(@MultipartForm FileUploadForm form) {
  
-		String fileName = "d:\\anything";
+		String fileName = "C:\\temp\\uploadedfile.css";
  
 		try {
 			writeFile(form.getData(), fileName);
