@@ -1,0 +1,19 @@
+<p>This is the partial for view 2.</p>
+<p>
+  Showing of 'interpolate' filter:
+  {{ 'Current version is v%VERSION%.' | interpolate }}
+</p>
+<input type="text" ng-model="germanyData" > <button ng-click="updateDate()"></button>
+
+
+<div gauge-chart="chartData" ng-controller="RequestChartCntl" chart-width="200"
+	chart-height="200" chart-redfrom="100" chart-redto="200" chart-yellowfrom="75" chart-yellowto="100" 
+	chart-max="200" chart-min="0"></div>
+
+
+<div area-chart="chartData" chart-height="100" chart-title="Threads" chart-haxis-title="Time" ng-controller="ThreadCountCntl"></div>
+
+<div area-chart="chartData" chart-height="100" chart-title="Memory" chart-haxis-title="Time"  ng-controller="MemorytCntl"></div>
+
+<div area-chart="chartData" chart-height="100" chart-title="Memory Heap" chart-haxis-title="Time"  ng-controller="MemoryHeaptCntl"></div>
+

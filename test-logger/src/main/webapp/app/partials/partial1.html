@@ -1,0 +1,16 @@
+<p>This is the partial for view 1.</p>
+<input type="text" ng-model="germanyData"> <button ng-click="updateDate()"></button>
+{{germanyData}}
+<div column-chart="chartData" chart-title="Eiii new Chart" chart-haxis-title="Esteve"></div>
+
+
+
+
+	<form ng-controller="FileUploadCntl" ng-submit="createUser()" method="post" enctype="multipart/form-data">
+ 
+	   <p>
+		Select a file : <input type="file" ng-model="uploadedFile" name="uploadedFile" size="50" />
+	   </p>
+ 
+	   <input type="submit" value="Upload It" />
+	</form>
