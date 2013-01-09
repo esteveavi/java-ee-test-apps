@@ -38,10 +38,16 @@ function FileUploadCntl($scope, $timeout, $log, $http) {
 		headers: {'Content-Type': 'multipart/form-data'}
 		});
 		*/
+		
+		  var fileInput = document.getElementById('uploadedFile');
+	        var file = fileInput.files[0];
+	        var formData = new FormData();
+	        formData.append('uploadedFile', file)
+	        
 		var fd = new FormData();
 		fd.append('uploadedFile', $scope.uploadedFile);
 		
-		$http.post('../rest/customer/upload/process', fd, {
+		$http.post('../rest/customer/upload/process', formData, {
 		    transformRequest: angular.identity,
 		    headers: {
 		        'Content-Type': undefined
