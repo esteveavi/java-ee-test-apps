@@ -158,6 +158,12 @@
 	</repositories>
 	<build>
 		<finalName>test-logger</finalName>
+
+		<!-- i18n for DEFAULT LANGUAGE -->
+		<filters>
+			<filter>${configuration.path}/i18n/messages_en.properties</filter>
+		</filters>
+		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -175,8 +181,87 @@
 				<extensions>false</extensions>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <webResource>
+                            <directory>${basedir}/src/main/webapp/WEB-INF</directory>
+                            <includes>
+                                <include>web.xml</include>>
+                            </includes>
+                            <targetPath>WEB-INF</targetPath>
+                            <filtering>true</filtering>
+                        </webResource>
+                    </webResources>
+                    <!-- i18n for DEFAULT LANGUAGE -->
+                    <webResources>
+                        <webResource>
+                            <directory>${basedir}/src/main/webapp/app</directory>
+                            <includes>
+                                <include>**/*</include>>
+                            </includes>
+                            <targetPath>app</targetPath>
+                            <filtering>true</filtering>
+                        </webResource>
+                    </webResources>
+                   <outputDirectory>C:\servers\jboss-as-7.1.1.Final\standalone\deployments</outputDirectory>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+				 	<!-- i18n for REPLICATED LANGUAGES START -->
+				 	<!-- SPANISH -->
+					<execution>
+						<id>copy-resources-espanol</id>
+						<!-- here the phase you need -->
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/app/es/</outputDirectory>
+							<filters>
+								<filter>${configuration.path}/i18n/messages_es_ES.properties</filter>
+							</filters>
+							<resources>
+								<resource>
+									<directory>src/main/webapp/app</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				 	<!-- ENGLISH -->
+					<execution>
+						<id>copy-resources-english</id>
+						<!-- here the phase you need -->
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/app/es/</outputDirectory>
+							<filters>
+								<filter>${configuration.path}/i18n/messages_en.properties</filter>
+							</filters>
+							<resources>
+								<resource>
+									<directory>src/main/webapp/app</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>					
+					<!-- i18n for REPLICATED LANGUAGES END -->
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
+	<properties>
+		<configuration.path>${project.basedir}/etc</configuration.path>
+	</properties>
 </project>

@@ -1,4 +1,9 @@
+<h1>${test.message}</h1>
 <p>This is the partial for view 2.</p>
+
+
+<h1>Loading: {{loading}}</h1>
+
 <p>
   Showing of 'interpolate' filter:
   {{ 'Current version is v%VERSION%.' | interpolate }}
@@ -9,6 +14,11 @@
 <div gauge-chart="chartData" ng-controller="RequestChartCntl" chart-width="200"
 	chart-height="200" chart-redfrom="100" chart-redto="200" chart-yellowfrom="75" chart-yellowto="100" 
 	chart-max="200" chart-min="0"></div>
+	
+	
+<div gauge-chart="chartData" ng-controller="ActiveRequestChartCntl" chart-width="200"
+	chart-height="200" chart-redfrom="100" chart-redto="200" chart-yellowfrom="75" chart-yellowto="100" 
+	chart-max="200" chart-min="0"></div>
 
 
 <div area-chart="chartData" chart-height="100" chart-title="Threads" chart-haxis-title="Time" ng-controller="ThreadCountCntl"></div>
@@ -16,4 +26,9 @@
 <div area-chart="chartData" chart-height="100" chart-title="Memory" chart-haxis-title="Time"  ng-controller="MemorytCntl"></div>
 
 <div area-chart="chartData" chart-height="100" chart-title="Memory Heap" chart-haxis-title="Time"  ng-controller="MemoryHeaptCntl"></div>
+
+
+<div candlestick-chart="chartData" chart-height="200" chart-title="Requests Response Time ({{unit}})" 
+chart-haxis-title="Time"  
+ng-controller="RequestsCandleStickChartCntl"></div>
 
