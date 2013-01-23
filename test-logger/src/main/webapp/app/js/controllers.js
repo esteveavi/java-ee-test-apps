@@ -93,6 +93,107 @@ function MyCtrl2($scope, $timeout, $log, MonitoringService, loadingService) {
 }
 
 
+function RequestCntl($scope, $log ) {
+	$scope.chartData = [];
+	$scope.dataPropWebappMetricsFilter = "com.yammer.metrics.web.WebappMetricsFilter";
+	$scope.$on('MonitoringDataUpdated', function() {
+		$log.log("RequestChartCntl ");
+		$scope.requestsMean = $scope.monitoringData[$scope.dataPropWebappMetricsFilter];
+		
+		/* Request duration */
+		$scope.requestDurationUnit =  $scope.$eval('requestsMean.requests.duration.unit');
+		$scope.requestDurationMin =  $scope.$eval('requestsMean.requests.duration.min').toPrecision(3);
+		$scope.requestDurationMax =  $scope.$eval('requestsMean.requests.duration.max').toPrecision(5);
+		$scope.requestDurationMean =   $scope.$eval('requestsMean.requests.duration.mean').toPrecision(3);
+		$scope.requestDurationStd =  $scope.$eval('requestsMean.requests.duration.std_dev').toPrecision(3);
+		$scope.requestDurationMedian =  $scope.$eval('requestsMean.requests.duration.median').toPrecision(3);
+		$scope.requestDurationp75 =  $scope.$eval('requestsMean.requests.duration.p75').toPrecision(3);
+		$scope.requestDurationp95 =  $scope.$eval('requestsMean.requests.duration.p95').toPrecision(3);
+		$scope.requestDurationp98 =  $scope.$eval('requestsMean.requests.duration.p98').toPrecision(3);
+		$scope.requestDurationp99 =  $scope.$eval('requestsMean.requests.duration.p99').toPrecision(3);
+		$scope.requestDurationp999 =  $scope.$eval('requestsMean.requests.duration.p999').toPrecision(3);
+
+		/* Request Rate */
+		$scope.requestRateUnit =  $scope.$eval('requestsMean.requests.rate.unit');
+		$scope.requestRateCount =  $scope.$eval('requestsMean.requests.rate.count');
+		$scope.requestRateMean =  $scope.$eval('requestsMean.requests.rate.mean').toPrecision(5);
+		$scope.requestRateM1 =   $scope.$eval('requestsMean.requests.rate.m1').toPrecision(3);
+		$scope.requestRateM5 =  $scope.$eval('requestsMean.requests.rate.m5').toPrecision(3);
+		$scope.requestRateM15 =  $scope.$eval('requestsMean.requests.rate.m15').toPrecision(3);
+		
+		/* Bad Requests */
+		$scope.badRequest = $scope.requestsMean["responseCodes.badRequest"];
+		$scope.badRequestUnit =  $scope.$eval('badRequest.unit');
+		$scope.badRequestCount =  $scope.$eval('badRequest.count');
+		$scope.badRequestMean =  $scope.$eval('badRequest.mean').toPrecision(5);
+		$scope.badRequestM1 =  $scope.$eval('badRequest.m1').toPrecision(5);
+		$scope.badRequestM5 =  $scope.$eval('badRequest.m5').toPrecision(5);
+		$scope.badRequestM15 =  $scope.$eval('badRequest.m15').toPrecision(5);
+		
+		
+		/* Created */
+		$scope.requestCreated = $scope.requestsMean["responseCodes.created"];
+		$scope.requestCreatedUnit =  $scope.$eval('requestCreated.unit');
+		$scope.requestCreatedCount =  $scope.$eval('requestCreated.count');
+		$scope.requestCreatedMean =  $scope.$eval('requestCreated.mean').toPrecision(5);
+		$scope.requestCreatedM1 =  $scope.$eval('requestCreated.m1').toPrecision(5);
+		$scope.requestCreatedM5 =  $scope.$eval('requestCreated.m5').toPrecision(5);
+		$scope.requestCreatedM15 =  $scope.$eval('requestCreated.m15').toPrecision(5);
+		
+		/* noContent */
+		$scope.requestNoContent = $scope.requestsMean["responseCodes.noContent"];
+		$scope.requestNoContentUnit =  $scope.$eval('requestNoContent.unit');
+		$scope.requestNoContentCount =  $scope.$eval('requestNoContent.count');
+		$scope.requestNoContentMean =  $scope.$eval('requestNoContent.mean').toPrecision(5);
+		$scope.requestNoContentM1 =  $scope.$eval('requestNoContent.m1').toPrecision(5);
+		$scope.requestNoContentM5 =  $scope.$eval('requestNoContent.m5').toPrecision(5);
+		$scope.requestNoContentM15 =  $scope.$eval('requestNoContent.m15').toPrecision(5);
+		
+		/* requestNotFound */
+		$scope.requestNotFound = $scope.requestsMean["responseCodes.notFound"];
+		$scope.requestNotFoundUnit =  $scope.$eval('requestNotFound.unit');
+		$scope.requestNotFoundCount =  $scope.$eval('requestNotFound.count');
+		$scope.requestNotFoundMean =  $scope.$eval('requestNotFound.mean').toPrecision(5);
+		$scope.requestNotFoundM1 =  $scope.$eval('requestNotFound.m1').toPrecision(5);
+		$scope.requestNotFoundM5 =  $scope.$eval('requestNotFound.m5').toPrecision(5);
+		$scope.requestNotFoundM15 =  $scope.$eval('requestNotFound.m15').toPrecision(5);
+		
+		
+		/* Ok */
+		$scope.requestOk = $scope.requestsMean["responseCodes.ok"];
+		$scope.requestOkUnit =  $scope.$eval('requestOk.unit');
+		$scope.requestOkCount =  $scope.$eval('requestOk.count');
+		$scope.requestOkMean =  $scope.$eval('requestOk.mean').toPrecision(5);
+		$scope.requestOkM1 =  $scope.$eval('requestOk.m1').toPrecision(5);
+		$scope.requestOkM5 =  $scope.$eval('requestOk.m5').toPrecision(5);
+		$scope.requestOkM15 =  $scope.$eval('requestOk.m15').toPrecision(5);	
+		
+		/* Other */
+		$scope.requestOther = $scope.requestsMean["responseCodes.other"];
+		$scope.requestOtherUnit =  $scope.$eval('requestOther.unit');
+		$scope.requestOtherCount =  $scope.$eval('requestOther.count');
+		$scope.requestOtherMean =  $scope.$eval('requestOther.mean').toPrecision(5);
+		$scope.requestOtherM1 =  $scope.$eval('requestOther.m1').toPrecision(5);
+		$scope.requestOtherM5 =  $scope.$eval('requestOther.m5').toPrecision(5);
+		$scope.requestOtherM15 =  $scope.$eval('requestOther.m15').toPrecision(5);
+
+		
+		/* Server Error */
+		$scope.requestServerError = $scope.requestsMean["responseCodes.serverError"];
+		$scope.requestServerErrorUnit =  $scope.$eval('requestServerError.unit');
+		$scope.requestServerErrorCount =  $scope.$eval('requestServerError.count');
+		$scope.requestServerErrorMean =  $scope.$eval('requestServerError.mean').toPrecision(5);
+		$scope.requestServerErrorM1 =  $scope.$eval('requestServerError.m1').toPrecision(5);
+		$scope.requestServerErrorM5 =  $scope.$eval('requestServerError.m5').toPrecision(5);
+		$scope.requestServerErrorM15 =  $scope.$eval('requestServerError.m15').toPrecision(5);	
+		
+	});
+}
+
+
+
+
+
 function RequestChartCntl($scope, $log ) {
 	$scope.chartData = [];
 	$scope.dataPropWebappMetricsFilter = "com.yammer.metrics.web.WebappMetricsFilter";
