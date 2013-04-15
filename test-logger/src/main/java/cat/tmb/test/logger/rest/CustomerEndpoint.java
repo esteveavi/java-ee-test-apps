@@ -73,8 +73,6 @@ public class CustomerEndpoint
 		//Join<Customer, Order> p = (Join<Customer, Order>)root.fetch("orders");
 		javax.persistence.criteria.Path<Object> path = orders.get("id");
 		
-
-		
 		cq.where(cb.and( cb.equal(root.get("id"),1 ), cb.equal(path,2 )));
 		
 		TypedQuery<Customer> q = em.createQuery(cq);
