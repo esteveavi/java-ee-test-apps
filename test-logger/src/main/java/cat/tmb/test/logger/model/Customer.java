@@ -1,121 +1,117 @@
 package cat.tmb.test.logger.model;
 
-import javax.persistence.Entity;
 import java.io.Serializable;
-import javax.persistence.Id;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
-import java.lang.Override;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
+
+
 @XmlRootElement
 @Entity
-@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Customer implements Serializable
 {
 
-   @Id
-   private @GeneratedValue(strategy = GenerationType.AUTO)
-   @Column(name = "id", updatable = false, nullable = false)
-   Long id = null;
-   @Version
-   private @Column(name = "version")
-   int version = 0;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5647726859488534174L;
+	@Id
+	private @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", updatable = false, nullable = false)
+	Long id = null;
+	@Version
+	private @Column(name = "version")
+	int version = 0;
 
-   @Column
-   private String firstName;
+	@Column
+	private String firstName;
 
-   @Column
-   private String lastName;
+	@Column
+	private String lastName;
 
-   @XmlTransient
-   public Long getId()
-   {
-      return this.id;
-   }
-   
-  
-   public void setId(final Long id)
-   {
-      this.id = id;
-   }
-   
-   public int getVersion()
-   {
-      return this.version;
-   }
+	@JsonManagedReference
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="customer")
+	private Set<Order> orders;
+
+	@XmlTransient
+	public Long getId()
+	{
+		return this.id;
+	}
 
 
-   public void setVersion(final int version)
-   {
-      this.version = version;
-   }
+	public void setId(final Long id)
+	{
+		this.id = id;
+	}
 
-   @Override
-   public boolean equals(Object that)
-   {
-      if (this == that)
-      {
-         return true;
-      }
-      if (that == null)
-      {
-         return false;
-      }
-      if (getClass() != that.getClass())
-      {
-         return false;
-      }
-      if (id != null)
-      {
-         return id.equals(((Customer) that).id);
-      }
-      return super.equals(that);
-   }
+	public int getVersion()
+	{
+		return this.version;
+	}
 
-   @Override
-   public int hashCode()
-   {
-      if (id != null)
-      {
-         return id.hashCode();
-      }
-      return super.hashCode();
-   }
 
-   public String getFirstName()
-   {
-      return this.firstName;
-   }
+	@JsonManagedReference
+	public Set<Order> getOrders() {
+		return orders;
+	}
 
-   public void setFirstName(final String firstName)
-   {
-      this.firstName = firstName;
-   }
 
-   public String getLastName()
-   {
-      return this.lastName;
-   }
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
 
-   public void setLastName(final String lastName)
-   {
-      this.lastName = lastName;
-   }
 
-   public String toString()
-   {
-      String result = "";
-      if (firstName != null && !firstName.trim().isEmpty())
-         result += firstName;
-      if (lastName != null && !lastName.trim().isEmpty())
-         result += " " + lastName;
-      return result;
-   }
+	public void setVersion(final int version)
+	{
+		this.version = version;
+	}
+
+
+	public String getFirstName()
+	{
+		return this.firstName;
+	}
+
+	public void setFirstName(final String firstName)
+	{
+		this.firstName = firstName;
+	}
+
+	public String getLastName()
+	{
+		return this.lastName;
+	}
+
+	public void setLastName(final String lastName)
+	{
+		this.lastName = lastName;
+	}
+
+	public String toString()
+	{
+		String result = "";
+		if (firstName != null && !firstName.trim().isEmpty())
+			result += firstName;
+		if (lastName != null && !lastName.trim().isEmpty())
+			result += " " + lastName;
+		return result;
+	}
+
+
+	
+	
+	
 }

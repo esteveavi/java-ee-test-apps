@@ -50,8 +50,8 @@ public class CustomerBean implements Serializable
     * Support creating and retrieving Customer entities
     */
 
-   @Inject
-   Logger log;
+   //@Inject
+  // Logger log;
    
    
    private Long id;
@@ -88,10 +88,10 @@ public class CustomerBean implements Serializable
 
    public void retrieve()
    {
-	   log.debug("**************************sa *{}, saa {}, sasa {}", "1", "2", "3");
-	   log.info("**************************sa *{}, saa {}, sasa {}", "1", "2", "3");
-	   log.warn("***************************");
-	   log.error("***************************");
+	  // log.debug("**************************sa *{}, saa {}, sasa {}", "1", "2", "3");
+	   //log.info("**************************sa *{}, saa {}, sasa {}", "1", "2", "3");
+	   //log.warn("***************************");
+	  // log.error("***************************");
 	   //log.fatal("***************************");
 	   
       if (FacesContext.getCurrentInstance().isPostback())

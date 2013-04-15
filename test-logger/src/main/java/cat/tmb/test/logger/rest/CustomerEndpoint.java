@@ -1,15 +1,18 @@
 package cat.tmb.test.logger.rest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,24 +21,21 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Response;
-
-import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import cat.tmb.test.logger.model.Customer;
+import cat.tmb.test.logger.model.Order;
 
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>
  * 
  *         JAX-RS Example This class produces a RESTful service to read the contents of the table.
  */
-@Stateful
+@Stateless
 @Path("/customer")
 @TransactionAttribute
 public class CustomerEndpoint 
 {
-	@PersistenceContext(type = PersistenceContextType.EXTENDED)
+	@PersistenceContext
 	private EntityManager em;
 
 	@POST
@@ -61,11 +61,25 @@ public class CustomerEndpoint
 
 	@GET
 	@Path("/{id:[0-9][0-9]*}")
-	@Produces("application/xml")
+	@Produces("application/json")
 	public Customer findById(@PathParam("id")
 	Long id)
 	{
-		return em.find(Customer.class, id);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
+		Root<Customer> root = cq.from(Customer.class);
+		
+		Join<Object, Object> orders = (Join<Object, Object>) root.fetch( "orders" );
+		//Join<Customer, Order> p = (Join<Customer, Order>)root.fetch("orders");
+		javax.persistence.criteria.Path<Object> path = orders.get("id");
+		
+
+		
+		cq.where(cb.and( cb.equal(root.get("id"),1 ), cb.equal(path,2 )));
+		
+		TypedQuery<Customer> q = em.createQuery(cq);
+		
+		return q.getSingleResult();
 	}
 
 	@GET
@@ -98,48 +112,48 @@ public class CustomerEndpoint
 
 	}
 
-	
-	
+
+	/*
 
 	@POST
 	@Path("/upload/process")
 	@Consumes("multipart/form-data")
 	public Response uploadFile(@MultipartForm FileUploadForm form) {
- 
+
 		String fileName = "d:\\anything";
- 
+
 		try {
 			writeFile(form.getData(), fileName);
 		} catch (IOException e) {
- 
+
 			e.printStackTrace();
 		}
- 
+
 		System.out.println("Done");
- 
+
 		return Response.status(200)
 		    .entity("uploadFile is called, Uploaded file name : " + fileName).build();
- 
+
 	}
- 
+
 	// save to somewhere
 	private void writeFile(byte[] content, String filename) throws IOException {
- 
+
 		File file = new File(filename);
- 
+
 		if (!file.exists()) {
 			file.createNewFile();
 		}
- 
+
 		FileOutputStream fop = new FileOutputStream(file);
- 
+
 		fop.write(content);
 		fop.flush();
 		fop.close();
- 
+
 	}
 
-	
-	
+
+	 */
 
 }

@@ -7,9 +7,11 @@ import org.slf4j.LoggerFactory;
 
 public class Resources {
 	
+	/**
 	@Produces
 	public Logger produceLogger(){
 		return LoggerFactory.getLogger("test");
 	}
+	**/
 
 }
