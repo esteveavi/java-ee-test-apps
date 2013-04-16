@@ -1,17 +1,16 @@
-package cat.tmb.test.logger.rest;
+package com.pelopiti.test.sandbox.logger.rest;
 
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,9 +20,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
-import cat.tmb.test.logger.model.Customer;
-import cat.tmb.test.logger.model.Order;
+import com.pelopiti.test.sandbox.model.Customer;
+import com.pelopiti.test.sandbox.services.payment.PayPalPaymentProcessor;
+import com.pelopiti.test.sandbox.services.payment.PaymentProcessor;
+
 
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>
@@ -38,6 +40,10 @@ public class CustomerEndpoint
 	@PersistenceContext
 	private EntityManager em;
 
+	 @Inject
+	@PayPalPaymentProcessor
+	private PaymentProcessor paymentProcessor;
+	
 	@POST
 	@Consumes("application/xml")
 	public Customer create(Customer entity)
@@ -80,6 +86,15 @@ public class CustomerEndpoint
 		return q.getSingleResult();
 	}
 
+	@GET
+	@Path("/checkout")
+	@Produces("application/json")
+	public Response checkout()
+	{
+		paymentProcessor.checkoutPayment();
+		return Response.status(200).build();
+	}
+	
 	@GET
 	@Produces("application/json")
 	public List<Customer> listAll()

@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.view;
+package com.pelopiti.test.sandbox.view;
 
 import java.util.ArrayList;
 import java.util.Collection;

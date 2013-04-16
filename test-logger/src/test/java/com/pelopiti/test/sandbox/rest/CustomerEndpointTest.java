@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.rest;
+package com.pelopiti.test.sandbox.rest;
 
 import javax.inject.Inject;
 
@@ -10,6 +10,8 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.pelopiti.test.sandbox.logger.rest.CustomerEndpoint;
 
 @RunWith(Arquillian.class)
 public class CustomerEndpointTest

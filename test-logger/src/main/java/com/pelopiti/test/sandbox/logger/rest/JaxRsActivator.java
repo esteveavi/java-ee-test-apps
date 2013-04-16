@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.rest;
+package com.pelopiti.test.sandbox.logger.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

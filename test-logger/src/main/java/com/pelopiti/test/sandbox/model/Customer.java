@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.model;
+package com.pelopiti.test.sandbox.model;
 
 import java.io.Serializable;
 import java.util.Set;

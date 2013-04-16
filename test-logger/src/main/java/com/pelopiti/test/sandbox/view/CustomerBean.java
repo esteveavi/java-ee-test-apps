@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.view;
+package com.pelopiti.test.sandbox.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +26,8 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 
-import cat.tmb.test.logger.model.Customer;
+import com.pelopiti.test.sandbox.model.Customer;
+
 
 /**
  * Backing bean for Customer entities.

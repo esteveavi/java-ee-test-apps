@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.services.monitor;
+package com.pelopiti.test.sandbox.services.monitor;
 
 import com.yammer.metrics.core.HealthCheck;
 

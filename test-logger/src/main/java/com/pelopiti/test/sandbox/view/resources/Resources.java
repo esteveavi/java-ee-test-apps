@@ -1,4 +1,4 @@
-package cat.tmb.test.logger.view.resources;
+package com.pelopiti.test.sandbox.view.resources;
 
 import javax.enterprise.inject.Produces;
 
