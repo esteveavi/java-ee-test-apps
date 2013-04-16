@@ -11,4 +11,18 @@ value('version', '0.1')
 	return $resource('../metrics/metrics', {}, {
 		query: {method:'GET', isArray:false}
 	});
-});
+})
+
+.factory('loadingService', function($http) {
+  var service = {
+    requestCount: $http.pendingRequests.length,
+    isLoading: function() {
+      return service.requestCount > 0;
+    }
+  };
+  return service;
+})
+
+
+
+;

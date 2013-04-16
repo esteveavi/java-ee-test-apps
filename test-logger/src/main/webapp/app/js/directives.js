@@ -88,6 +88,39 @@ directive('appVersion', ['version', function(version) {
 	}
 })
 
+.directive('candlestickChart', function() {
+
+	return function(scope, element, attrs, MonitoringService) {
+		// Log element
+		console.log(scope, element, attrs);
+		var chart = new google.visualization.CandlestickChart( element[0]);
+		scope.$watch(attrs.candlestickChart, function(value) {
+			//alert('New Array: '+value);
+			var data = google.visualization.arrayToDataTable(value, true);
+
+			var options = {
+					title: attrs.chartTitle,
+					hAxis: {
+						title: attrs.chartHaxisTitle,  
+						titleTextStyle: {
+							color: 'red'
+						}
+					},
+					height: attrs.chartHeight,
+					animation:{
+						duration: 1000,
+						easing: 'in',
+					},
+					legend:'none'
+
+			};
+
+			chart.draw(data, options);
+
+
+		});
+	}
+})
 
 .directive('formulateUploader', function(){
     return {

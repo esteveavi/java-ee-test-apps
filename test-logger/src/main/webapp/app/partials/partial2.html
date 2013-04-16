@@ -1,19 +1,171 @@
+<h1>${test.message}</h1>
 <p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
-<input type="text" ng-model="germanyData" > <button ng-click="updateDate()"></button>
 
 
-<div gauge-chart="chartData" ng-controller="RequestChartCntl" chart-width="200"
-	chart-height="200" chart-redfrom="100" chart-redto="200" chart-yellowfrom="75" chart-yellowto="100" 
+<h1>Loading: {{loading}}</h1>
+
+<p>Showing of 'interpolate' filter: {{ 'Current version is
+	v%VERSION%.' | interpolate }}</p>
+<input type="text" ng-model="germanyData">
+<button ng-click="updateDate()"></button>
+
+<ul class="thumbnails" ng-controller="RequestCntl">
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Request Duration Time</h5>
+			<h2>{{requestDurationMean}}</h2>
+			<p class="muted">{{requestDurationUnit}}</p>
+			<ul class="unstyled">
+				<li>Min <span class="badge">{{requestDurationMin}}</span></li>
+				<li>Max <span class="badge">{{requestDurationMax}}</span></li>
+				<li>Std Dev <span class="badge">{{requestDurationStd}}</span></li>
+				<li>Median <span class="badge">{{requestDurationMedian}}</span></li>
+				<li>%75 <span class="badge">{{requestDurationp75}}</span></li>
+				<li>%95 <span class="badge">{{requestDurationp95}}</span></li>
+				<li>%99 <span class="badge">{{requestDurationp99}}</span></li>
+				<li>%999 <span class="badge">{{requestDurationp999}}</span></li>
+			</ul>
+		</div>
+	</li>
+
+
+
+</ul>
+
+
+<ul class="thumbnails" ng-controller="RequestCntl">
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Requests Rate Total</h5>
+			<h2>{{requestRateMean}}</h2>
+			<p class="muted">{{requestRateUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestRateCount}}</span></li>
+				<li>M1 <span class="badge">{{requestRateM1}}</span></li>
+				<li>M5 <span class="badge">{{requestRateM5}}</span></li>
+				<li>M15 <span class="badge">{{requestRateM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Bad Requests</h5>
+			<h2>{{badRequestMean}}</h2>
+			<p class="muted">{{badRequestUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{badRequestCount}}</span></li>
+				<li>M1 <span class="badge">{{badRequestM1}}</span></li>
+				<li>M5 <span class="badge">{{badRequestM5}}</span></li>
+				<li>M15 <span class="badge">{{badRequestM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Created</h5>
+			<h2>{{requestCreatedMean}}</h2>
+			<p class="muted">{{requestCreatedUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestCreatedCount}}</span></li>
+				<li>M1 <span class="badge">{{requestCreatedM1}}</span></li>
+				<li>M5 <span class="badge">{{requestCreatedM5}}</span></li>
+				<li>M15 <span class="badge">{{requestCreatedM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>No Content</h5>
+			<h2>{{requestNoContentMean}}</h2>
+			<p class="muted">{{requestNoContentUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestNoContentCount}}</span></li>
+				<li>M1 <span class="badge">{{requestNoContentM1}}</span></li>
+				<li>M5 <span class="badge">{{requestNoContentM5}}</span></li>
+				<li>M15 <span class="badge">{{requestNoContentM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Not Found</h5>
+			<h2>{{requestNotFoundMean}}</h2>
+			<p class="muted">{{requestNotFoundUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestNotFoundCount}}</span></li>
+				<li>M1 <span class="badge">{{requestNotFoundM1}}</span></li>
+				<li>M5 <span class="badge">{{requestNotFoundM5}}</span></li>
+				<li>M15 <span class="badge">{{requestNotFoundM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Ok</h5>
+			<h2>{{requestOkMean}}</h2>
+			<p class="muted">{{requestOkUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestOkCount}}</span></li>
+				<li>M1 <span class="badge">{{requestOkM1}}</span></li>
+				<li>M5 <span class="badge">{{requestOkM5}}</span></li>
+				<li>M15 <span class="badge">{{requestOkM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Other</h5>
+			<h2>{{requestOtherMean}}</h2>
+			<p class="muted">{{requestOtherUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestOtherCount}}</span></li>
+				<li>M1 <span class="badge">{{requestOtherM1}}</span></li>
+				<li>M5 <span class="badge">{{requestOtherM5}}</span></li>
+				<li>M15 <span class="badge">{{requestOtherM15}}</span></li>
+			</ul>
+			<small class="muted">NOTE: 304, 3...</small>
+		</div>
+	</li>
+	<li class="span2">
+		<div class="thumbnail">
+			<h5>Server Error</h5>
+			<h2>{{requestServerErrorMean}}</h2>
+			<p class="muted">{{requestServerErrorUnit}}</p>
+			<ul class="unstyled">
+				<li>Count <span class="badge">{{requestServerCount}}</span></li>
+				<li>M1 <span class="badge">{{requestServerErrorM1}}</span></li>
+				<li>M5 <span class="badge">{{requestServerErrorM5}}</span></li>
+				<li>M15 <span class="badge">{{requestServerErrorM15}}</span></li>
+			</ul>
+		</div>
+	</li>
+</ul>
+
+
+<div gauge-chart="chartData" ng-controller="RequestChartCntl"
+	chart-width="200" chart-height="200" chart-redfrom="100"
+	chart-redto="200" chart-yellowfrom="75" chart-yellowto="100"
 	chart-max="200" chart-min="0"></div>
 
 
-<div area-chart="chartData" chart-height="100" chart-title="Threads" chart-haxis-title="Time" ng-controller="ThreadCountCntl"></div>
+<div gauge-chart="chartData" ng-controller="ActiveRequestChartCntl"
+	chart-width="200" chart-height="200" chart-redfrom="100"
+	chart-redto="200" chart-yellowfrom="75" chart-yellowto="100"
+	chart-max="200" chart-min="0"></div>
 
-<div area-chart="chartData" chart-height="100" chart-title="Memory" chart-haxis-title="Time"  ng-controller="MemorytCntl"></div>
 
-<div area-chart="chartData" chart-height="100" chart-title="Memory Heap" chart-haxis-title="Time"  ng-controller="MemoryHeaptCntl"></div>
+<div area-chart="chartData" chart-height="100" chart-title="Threads"
+	chart-haxis-title="Time" ng-controller="ThreadCountCntl"></div>
+
+<div area-chart="chartData" chart-height="100" chart-title="Memory"
+	chart-haxis-title="Time" ng-controller="MemorytCntl"></div>
+
+<div area-chart="chartData" chart-height="100" chart-title="Memory Heap"
+	chart-haxis-title="Time" ng-controller="MemoryHeaptCntl"></div>
+
+
+<div candlestick-chart="chartData" chart-height="200"
+	chart-title="Requests Response Time ({{unit}})"
+	chart-haxis-title="Time" ng-controller="RequestsCandleStickChartCntl"></div>
 

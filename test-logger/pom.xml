@@ -3,16 +3,28 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cat.tmb.test.logger</groupId>
+	<groupId>com.pelopiti.test.sandbox</groupId>
 	<artifactId>test-logger</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
+	<properties>
+		<version.junit>4.11</version.junit>
+		<configuration.path>etc</configuration.path>
+		<version.arquillian_core>1.0.3.Final</version.arquillian_core>
+	</properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.jboss.spec</groupId>
 				<artifactId>jboss-javaee-6.0</artifactId>
 				<version>3.0.1.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.arquillian</groupId>
+				<artifactId>arquillian-bom</artifactId>
+				<version>${version.arquillian_core}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -54,14 +66,18 @@
 			<artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
-			<scope>provided</scope>
 			<version>2.3.2.Final</version>
+			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.12</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-multipart-provider</artifactId>
@@ -84,8 +100,6 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.2</version>
 		</dependency>
-		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
-			<version>1.2.17</version> </dependency> -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -101,51 +115,80 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.0-beta3</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.apache.logging.log4j.adapters</groupId>
 			<artifactId>log4j-web</artifactId>
 			<version>2.0-beta3</version>
 		</dependency>
-
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- optional, good for handle I/O task -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.0.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.yammer.metrics</groupId>
 			<artifactId>metrics-core</artifactId>
 			<version>2.2.0</version>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.yammer.metrics</groupId>
 			<artifactId>metrics-servlet</artifactId>
 			<version>2.2.0</version>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.yammer.metrics</groupId>
 			<artifactId>metrics-ehcache</artifactId>
 			<version>2.2.0</version>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>com.yammer.metrics</groupId>
 			<artifactId>metrics-web</artifactId>
 			<version>2.2.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.24</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.1.10.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.1.10.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.paypal.sdk</groupId>
+			<artifactId>rest-api-sdk</artifactId>
+			<version>0.5.2</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -158,6 +201,9 @@
 	</repositories>
 	<build>
 		<finalName>test-logger</finalName>
+		<filters>
+			<filter>${project.build.directory}/${configuration.path}/i18n/messages_en.properties</filter>
+		</filters>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -170,13 +216,103 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<native2ascii dest="target/etc/i18n" src="etc/i18n"
+									includes="**/*.properties" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.sun</groupId>
+						<artifactId>tools</artifactId>
+						<version>1.7.0</version>
+						<scope>system</scope>
+						<systemPath>${java.home}/../lib/tools.jar</systemPath>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.1.1</version>
 				<extensions>false</extensions>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<webResources>
+						<webResource>
+							<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+							<includes>
+								<include>web.xml</include>
+							</includes>
+							<targetPath>WEB-INF</targetPath>
+							<filtering>true</filtering>
+						</webResource>
+					</webResources>
+					<webResources>
+						<webResource>
+							<directory>${basedir}/src/main/webapp/app</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+							<targetPath>app</targetPath>
+							<filtering>true</filtering>
+						</webResource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources-espanol</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/app/es/</outputDirectory>
+							<filters>
+								<filter>${project.build.directory}/${configuration.path}/i18n/messages_es_ES.properties</filter>
+							</filters>
+							<resources>
+								<resource>
+									<directory>src/main/webapp/app</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>JBOSS_AS_MANAGED_7.X</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.as</groupId>
+					<artifactId>jboss-as-arquillian-container-managed</artifactId>
+					<version>7.1.1.Final</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

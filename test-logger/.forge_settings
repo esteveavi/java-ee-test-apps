@@ -11,5 +11,16 @@
 </forge>
 </jboss>
 </org>
-<rootpath>/rest</rootpath>
+<rootpath>"/rest/"</rootpath>
+<forge>
+<analytics>
+<enabled>false</enabled>
+</analytics>
+</forge>
+<rest>
+<applicationclass>
+<package>cat.tmb.test.logger.rest</package>
+<name>C:\/eclipse3.5/workspace_as7/java-ee-test-apps/test-logger/src/main/java/cat/tmb/test/logger/rest/JaxRsActivator.java</name>
+</applicationclass>
+</rest>
 </configuration>

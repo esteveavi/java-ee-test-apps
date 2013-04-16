@@ -1,3 +1,5 @@
+
+<h1>${test.message}</h1>
 <p>This is the partial for view 1.</p>
 <input type="text" ng-model="germanyData"> <button ng-click="updateDate()"></button>
 {{germanyData}}
@@ -6,12 +8,14 @@
 
 
 
-	<form ng-controller="FileUploadCntl" ng-submit="createUser()" method="post" enctype="multipart/form-data">
- 
+	<form ng-controller="FileUploadCntl" ng-submit="createUser()" method="post" >
 	   <p>
+<<<<<<< HEAD
 		Select a file : <input type="file"  size="50"   ng-model-instant id="uploadedFile" ng-model="uploadedFile" multiple/>
+=======
+		Select a file : <input type="file"  size="50"   id="uploadedFile"  multiple/>
+>>>>>>> 1.0.0-SNAPSHOT
 	   </p>
- 
 	   <input type="submit" value="Upload It" />
 	   <input type="button" ng-click="uploadFile()" value="Upload" />
 	</form>
